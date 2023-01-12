@@ -1,0 +1,12 @@
+az ad sp create-for-rbac --name "sp-reactordemo-jm" --role contributor --scopes /subscriptions/XXXXXXXXXXXXX --sdk-auth
+
+
+Secrets: 
+
+AZURE_CLIENT_ID = clientId
+
+AZURE_CLIENT_SECRET = clientSecret
+
+AZURE_TENANT_ID = tenantId
+
+SUBSCRIPTION_ID = subscriptionId

@@ -1,0 +1,46 @@
+name: criando-recursos
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    paths:
+      - 'iac/*.tf'
+
+  # Allows to run this workflow manually from actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  
+  infrageral:
+    runs-on: ubuntu-latest
+    
+    name: 'criando-recursos'
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      
+    steps:
+      
+      - uses: actions/checkout@v3
+
+      - name: 'Terraform init'
+        id: init
+        run: |
+          cd iac
+          terraform init          
+
+      - name: 'Terraform plan'
+        id: plan
+        run: |
+          cd iac
+          terraform plan
+                    
+      - name: 'Terraform apply'
+        id: apply
+        run: |
+          cd iac
+          terraform apply -auto-approve   
